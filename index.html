@@ -34,8 +34,12 @@
         radial-gradient(circle at 80% 60%, rgba(199,62,58,0.04) 0%, transparent 40%);
     }
     .hero-overlay {
-      background: linear-gradient(180deg, rgba(20,18,22,0.35) 0%, rgba(20,18,22,0.55) 60%, rgba(20,18,22,0.85) 100%);
+      background:
+        linear-gradient(90deg, rgba(20,18,22,0.82) 0%, rgba(20,18,22,0.48) 45%, rgba(20,18,22,0.22) 100%),
+        linear-gradient(180deg, rgba(20,18,22,0.5) 0%, rgba(20,18,22,0.12) 35%, rgba(20,18,22,0.78) 100%);
     }
+    .hero-chip { backdrop-filter: blur(8px); transition: transform .3s, background .3s; }
+    .hero-chip:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
     .stamp {
       border: 2px solid var(--vermilion);
       color: var(--vermilion);
@@ -65,6 +69,10 @@
     .check-item.checked .check-box { background: var(--vermilion); border-color: var(--vermilion); color: #fff; }
     .check-item.checked .check-label { text-decoration: line-through; color: #9ca3af; }
     .divider-washi { background: repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(199,62,58,.25) 8px, rgba(199,62,58,.25) 10px); height: 3px; }
+    .bottom-nav-item { transition: color .3s; }
+    .bottom-nav-item.active { color: var(--vermilion); }
+    #bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
+    #mobile-menu { max-height: calc(100vh - 64px); overflow-y: auto; }
   </style>
 </head>
 <body class="paper-texture">
@@ -76,10 +84,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
       <a href="#top" class="flex items-center gap-2 font-serif-sc font-bold text-lg text-[#1F2A44]">
         <span class="text-2xl">⛩️</span>
-        <span class="hidden sm:inline">关西五日攻略书</span>
+        <span>关西五日攻略书</span>
       </a>
       <nav id="nav-links" class="hidden lg:flex items-center gap-6 text-sm font-medium text-[#4b5563]"></nav>
-      <a href="#checklist" class="lg:hidden text-sm font-medium text-[#C73E3A]">清单</a>
+      <button id="menu-toggle" class="lg:hidden w-10 h-10 flex items-center justify-center text-2xl text-[#1F2A44] transition" aria-label="打开菜单">☰</button>
+    </div>
+    <div id="mobile-menu" class="lg:hidden hidden bg-[#FBF7F0] border-t border-[#e8dcc8] px-4 py-2 shadow-md">
+      <nav id="mobile-nav-links" class="flex flex-col text-sm font-medium text-[#4b5563]"></nav>
     </div>
   </header>
 
@@ -87,14 +98,19 @@
   <main id="app"></main>
 
   <!-- 页脚 -->
-  <footer class="mt-16 border-t border-[#e8dcc8] py-10 text-center">
+  <footer class="mt-16 border-t border-[#e8dcc8] py-10 pb-28 lg:pb-10 text-center">
     <p class="font-serif-sc text-[#1F2A44] font-semibold">祝你有一段愉快的旅程 ✈️</p>
     <p class="mt-2 text-sm text-[#6b7280]">攻略内容基于你的行程规划整理 · 仅供参考，出行请以官方实时信息为准</p>
     <p class="mt-6 text-sm">由 <a href="https://with.woa.com/" style="color: #8A2BE2;" target="_blank">With</a> 通过自然语言生成</p>
   </footer>
 
   <!-- 返回顶部 -->
-  <button id="back-top" class="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-[#C73E3A] text-white shadow-lg hidden items-center justify-center hover:bg-[#A3302D] transition" title="返回顶部">↑</button>
+  <button id="back-top" class="fixed bottom-24 lg:bottom-8 right-4 lg:right-8 z-50 w-12 h-12 rounded-full bg-[#C73E3A] text-white shadow-lg hidden items-center justify-center hover:bg-[#A3302D] transition" title="返回顶部">↑</button>
+
+  <!-- 移动端底部导航 -->
+  <nav id="bottom-nav" class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[#e8dcc8] shadow-[0_-4px_16px_rgba(31,42,68,0.08)]">
+    <div id="bottom-nav-inner" class="grid grid-cols-5"></div>
+  </nav>
 
   <script type="module" src="./js/main.js"></script>
 </body>
